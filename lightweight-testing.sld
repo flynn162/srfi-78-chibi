@@ -4,7 +4,6 @@
 
 (define-library (lightweight-testing)
   (import (scheme base) (scheme write)
-          (scheme process-context)
           (chibi test)
           )
   (export check check-report check-set-mode! check-reset! check-passed?)
