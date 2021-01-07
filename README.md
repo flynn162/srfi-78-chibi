@@ -1,11 +1,13 @@
 # (srfi 78)
 
-The lightweight testing library implemented on top of (chibi test)
+The [lightweight testing](https://srfi.schemers.org/srfi-78/srfi-78.html) library implemented as a wrapper around (chibi test)
+
+Not implemented: `check-ec` as Chibi does not support eager comprehension (SRFI-42)
 
 # License
 
 ```
-Copyright 2020 Flynn Liu
+Copyright 2020-2021 Flynn Liu
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -1,14 +1,18 @@
 ;; SPDX-License-Identifier: Apache-2.0
 ;; Copyright 2020 Flynn Liu
 
+;; Verbosity levels
 (define mode:off 0)
 (define mode:summary 10)
 (define mode:report-failed 20)
 (define mode:report 30)
 
+;; See check-set-mode!
 (define %check-mode mode:report)
-(define %check-state 'not-started)
+;; Possible values are 'state:not-started and 'state:group-started
+(define %check-state 'state:not-started)
 (define %check-correct 0)
+(define %check-group-name "SRFI-78")
 
 (define (wrap= f)
   (let ((has-run #f))
@@ -25,7 +29,7 @@
   (syntax-rules (=>)
     ((check <expr> (=> <equal>) <expected>)
      (begin
-       (when (symbol=? 'not-started %check-state)
+       (when (symbol=? 'state:not-started %check-state)
          (let ((old-mode %check-mode))
            (check-reset!)
            (set! %check-mode old-mode)))
@@ -69,13 +73,13 @@
 (define (check-reset!)
   (set! %check-mode mode:report)
   (set! %check-correct 0)
-  (if (symbol=? 'group-started %check-state)
+  (if (symbol=? 'state:group-started %check-state)
       (test-end))
   (current-test-group-reporter %wrapped-reporter)
   (current-test-applier %wrapped-applier)
-  (test-begin (car (command-line)))
+  (test-begin %check-group-name)
   (test-failure-count 0)
-  (set! %check-state 'group-started))
+  (set! %check-state 'state:group-started))
 
 (define (check-passed? expected-total-count)
   (and (= (test-failure-count) 0)
