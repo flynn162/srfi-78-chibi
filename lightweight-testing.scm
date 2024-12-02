@@ -1,6 +1,12 @@
 ;; SPDX-License-Identifier: Apache-2.0
 ;; Copyright 2020 Flynn Liu
 
+;; Usage:
+;; (check (string? "GNU General Public License v3.0 or later") => #t)
+;; (check (substring "SPDX-License-Identifier: GPL-3.0-or-later"
+;;                   1 4)
+;;        (=> string-ci=?) "pdx")
+
 ;; Verbosity levels
 (define mode:off 0)
 (define mode:summary 10)
